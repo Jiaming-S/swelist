@@ -68,7 +68,13 @@ def print_welcome_message():
     print("Sign-up below to receive updates when new internships/jobs are added")
 
 @app.command()
-def run(role="internship", timeframe="lastday", display="all", sep=''):
+def run(
+    role="internship",
+    timeframe="lasthour",
+    display="all",
+    sep='',
+    notify: Annotated[bool, typer.Option(help="Notify on MacOS.")] = False,
+):
     """A CLI tool for job seekers to find internships and new-grad positions"""
     if display == "all":
         print_welcome_message()
@@ -108,20 +114,31 @@ def run(role="internship", timeframe="lastday", display="all", sep=''):
     
     formatted_postings = []
     for posting in recent_postings:
-        formatted_postings.append(
-            '\n'.join([
-                f"Company: {posting['company_name']}",
-                f"Title: {posting['title']}",
-                f"Location: {posting['location']}" if posting.get('location') else f"Locations: {posting['locations']}",
-                f"Link: {posting['url']}",
-            ])
-        )
-    print(f"\n{sep}\n".join(formatted_postings))
+        if not notify:
+            formatted_postings.append(
+                '\n'.join([
+                    f"Company: {posting['company_name']}",
+                    f"Title: {posting['title']}",
+                    f"Location: {posting['location']}" if posting.get('location') else f"Locations: {posting['locations']}",
+                    f"Link: {posting['url']}",
+                ])
+            )
+        else:
+            formatted_postings.append(f"{posting['company_name']}\n{posting['title']}\n{posting['location'] if posting.get('location') else posting['locations']}\n")
+    
+    if not notify:
+        print(f"\n{sep}\n".join(formatted_postings))
+    else:
+        client.create_notification(title=f"### {len(recent_postings)} new postings in the past `{timeframe}` ###")
+        
+        for i, posting in enumerate(reversed(formatted_postings)):
+            time.sleep(5)
+            client.create_notification(
+                title=f"New Job Posting [{i + 1}/{len(recent_postings)}]",
+                text=posting,
+            )
 
-    client.create_notification(
-        title=f"{len(recent_postings)} new postings in the past hour",
-        text=formatted_postings,
-    )
+            
 
 
 if __name__ == "__main__":
