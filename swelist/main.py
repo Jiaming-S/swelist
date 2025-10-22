@@ -66,7 +66,7 @@ def print_welcome_message():
     print("Sign-up below to receive updates when new internships/jobs are added")
 
 @app.command()
-def run(role="internship", timeframe="lastday", display="all"):
+def run(role="internship", timeframe="lastday", sep='', display="all"):
     """A CLI tool for job seekers to find internships and new-grad positions"""
     if display == "all":
         print_welcome_message()
@@ -104,14 +104,17 @@ def run(role="internship", timeframe="lastday", display="all"):
         else:
             print(f"\nFound {len(recent_postings)} postings in the {timeframe}:")
     
+    formatted_postings = []
     for posting in recent_postings:
-        print(f"\nCompany: {posting['company_name']}")
-        print(f"Title: {posting['title']}")
-        if posting.get('location'):
-            print(f"Location: {posting['location']}")
-        if posting.get('locations'):
-            print(f"Locations: {posting['locations']}")
-        print(f"Link: {posting['url']}")
+        formatted_postings.append(
+            '\n'.join([
+                f"Company: {posting['company_name']}",
+                f"Title: {posting['title']}",
+                f"Location: {posting['location']}" if posting.get('location') else f"Locations: {posting['locations']}",
+                f"Link: {posting['url']}",
+            ])
+        )
+    print(f"\n{sep}\n".join(formatted_postings))
 
 
 if __name__ == "__main__":
