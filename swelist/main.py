@@ -66,9 +66,10 @@ def print_welcome_message():
     print("Sign-up below to receive updates when new internships/jobs are added")
 
 @app.command()
-def run(role="internship", timeframe="lastday"):
+def run(role="internship", timeframe="lastday", display="all"):
     """A CLI tool for job seekers to find internships and new-grad positions"""
-    print_welcome_message()
+    if display == "all":
+        print_welcome_message()
     
     if role == "internship":
         internship_url = "https://raw.githubusercontent.com/SimplifyJobs/Summer2025-Internships/refs/heads/dev/.github/scripts/listings.json"
@@ -83,19 +84,25 @@ def run(role="internship", timeframe="lastday"):
     current_time = time.time()
     time_threshold = 60 * 60 * 24  # 24 hours in seconds
     
-    if timeframe == "lastweek":
-        time_threshold = 60 * 60 * 24 * 7  # 7 days in seconds
+    if timeframe == "lasthour":
+        time_threshold = 60 * 60            # 1 hour in seconds
+    elif timeframe == "lastday":
+        time_threshold = 60 * 60 * 24       # 24 hours in seconds
+    elif timeframe == "lastweek":
+        time_threshold = 60 * 60 * 24 * 7   # 7 days in seconds
     elif timeframe == "lastmonth":
         time_threshold = 60 * 60 * 24 * 30  # 30 days in seconds
+    elif timeframe.isdigit():
+        time_threshold = int(timeframe)     # Other specified time in seconds
 
-    
     recent_postings = [x for x in data if abs(x['date_posted']-current_time) < time_threshold]
     
-    if not recent_postings:
-        print(f"No new postings in {timeframe}")
-        return
-    
-    print(f"\nFound {len(recent_postings)} postings in {timeframe}")
+    if display == "all":
+        if not recent_postings:
+            print(f"\nNo new postings in the {timeframe}")
+            return
+        else:
+            print(f"\nFound {len(recent_postings)} postings in the {timeframe}:")
     
     for posting in recent_postings:
         print(f"\nCompany: {posting['company_name']}")
@@ -103,7 +110,7 @@ def run(role="internship", timeframe="lastday"):
         if posting.get('location'):
             print(f"Location: {posting['location']}")
         if posting.get('locations'):
-            print(f"locations: {posting['locations']}")
+            print(f"Locations: {posting['locations']}")
         print(f"Link: {posting['url']}")
 
 
