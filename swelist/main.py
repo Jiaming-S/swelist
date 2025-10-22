@@ -1,12 +1,14 @@
 import json
-import time
-import urllib.request
-from datetime import datetime
-import typer
-from typing import Optional, Annotated
-from rich import print
-from enum import Enum
 import ssl
+import time
+import typer
+import urllib.request
+
+from datetime import datetime
+from enum import Enum
+from mac_notifications import client
+from rich import print
+from typing import Optional, Annotated
 
 ssl._create_default_https_context = ssl._create_stdlib_context
 
@@ -115,6 +117,11 @@ def run(role="internship", timeframe="lastday", display="all", sep=''):
             ])
         )
     print(f"\n{sep}\n".join(formatted_postings))
+
+    client.create_notification(
+        title=f"{len(recent_postings)} new postings in the past hour",
+        text=formatted_postings,
+    )
 
 
 if __name__ == "__main__":
