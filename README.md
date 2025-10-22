@@ -39,7 +39,9 @@ swelist --role internship --timeframe lastweek
 ### Options
 
 - `--role`: Choose between `internship` (default) or `newgrad` positions
-- `--timeframe`: Filter postings by time period: `lastday` (default), `lastweek`, or `lastmonth`
+- `--timeframe`: Filter postings by time period: `lastday` (default), `lasthour`, `lastweek`, or `lastmonth`
+- `--display`: What information to display: `all` (default), `minimal`
+- `--sep`: Add a separator between job postings
 
 ## Example Output
 

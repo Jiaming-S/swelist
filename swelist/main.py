@@ -66,7 +66,7 @@ def print_welcome_message():
     print("Sign-up below to receive updates when new internships/jobs are added")
 
 @app.command()
-def run(role="internship", timeframe="lastday", sep='', display="all"):
+def run(role="internship", timeframe="lastday", display="all", sep=''):
     """A CLI tool for job seekers to find internships and new-grad positions"""
     if display == "all":
         print_welcome_message()
