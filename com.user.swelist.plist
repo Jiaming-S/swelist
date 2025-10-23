@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.user.swelist</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/{YOUR_USERNAME}/Documents/Github/swelist/venv/bin/python3</string> <!-- Replace this with python path (`which python3`) -->
+        <string>/Users/{YOUR_USERNAME}/Documents/Github/swelist/swelist/main.py</string>  <!-- Replace this with swelist main.py path -->
+        <string>--timeframe</string>
+        <string>14400</string>
+        <string>--display</string>
+        <string>minimal</string>
+        <string>--notify</string>
+      </array>
+
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>10</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>12</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>14</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>18</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>22</integer><key>Minute</key><integer>0</integer></dict>
+    </array>
+</dict>
+</plist>
+

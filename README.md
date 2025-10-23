@@ -36,6 +36,13 @@ swelist --role newgrad
 swelist --role internship --timeframe lastweek
 ```
 
+Run in background with notifications (MacOS):
+```bash
+cp com.user.swelist.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/com.user.swelist.plist
+launchctl start com.user.swelist
+```
+
 ### Options
 
 - `--role`: Choose between `internship` (default) or `newgrad` positions

@@ -129,7 +129,7 @@ def run(
     if not notify:
         print(f"\n{sep}\n".join(formatted_postings))
     else:
-        client.create_notification(title=f"### {len(recent_postings)} new postings in the past `{timeframe}` ###")
+        client.create_notification(title=f"{len(recent_postings)} new postings in the past {time_threshold / 60 / 60:.3f} hour(s)")
         
         for i, posting in enumerate(reversed(formatted_postings)):
             time.sleep(5)
