@@ -27,6 +27,9 @@
         <dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>0</integer></dict>
         <dict><key>Hour</key><integer>22</integer><key>Minute</key><integer>0</integer></dict>
     </array>
+
+    <key>NetworkState</key>
+    <true/>
 </dict>
 </plist>
 
